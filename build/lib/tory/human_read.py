@@ -1,3 +1,5 @@
+import network
+import cpu
 
 #make network human readable, dict is a dictionary from the output of get_network_info()
 def net_human(dict):
@@ -44,15 +46,6 @@ def users_human(dict):
     for name in dict['groups']:
         print '%-12s\t%-12s' % (name, dict['groups'][name])
 
-#simple in human readable, dict is a dictionary from the output of get_simple()
-def simple_human(dict):
-    print "Number of CPUs: " + str(dict["CPU"])
-    print "Total RAM: " + find_units(dict["RAM"])
-    print "IP Address: " + dict["IP Address"]
-    print "Total HDD: " + find_units(dict["Total HDD"])
-    print "Hostname: " + dict["Hostname"]
-
-#converts from bytes to largest unit, returns a string of #units
 def find_units(num):
     counter = 0
     while (num > 999):

@@ -3,25 +3,51 @@
 import psutil
 import pprint
 import network
+import cpu
 import os
+import socket
+from network import get_network_info
+from cpu import mch_cpu
+from human_read import find_units
 
 def get_simple_info():
-	
+
 	simple_info = {}
 	
-	cpu_count = psutil.cpu_count()
-	ram = psutil.virtual_memory()
-	network = psutil.net_if_addrs()
-	disk = psutil.disk_usage('/')
+	try:
+		cpu_count = psutil.cpu_count()
+		ram = psutil.virtual_memory()
+		disk = psutil.disk_usage('/')
+	except:
+		print "Error: Please make sure you have psutil installed, psutil info not found"
+		
+	network = socket.gethostbyname(socket.gethostname())
 
-	for x in simple:
-		num_cpu = cpu_count
-		total_ram = ram[0]
-		ip_address = get_network_info(addresses[0][1])
-		ip_address = get_network_info("ip_address")
-		ip_address = network[0][1]
-		total_disk = disk[0]
-		hostname = os.uname()[1]
+	for x in network:
+		try:
+			num_cpu = cpu_count
+		except:
+			num_cpu = "Error: Number of CPUs could not be found"
+		
+		try:
+			total_ram = ram[0]
+		except:
+			total_ram = "Error: Total RAM could not be found"
+		
+		try:
+			ip_address = network
+		except:
+			ip_address = "Error: IP Address could not be found"
+		
+		try:
+			total_disk = disk[0]
+		except:
+			total_disk = "Error: Total HDD could not be found"
+		
+		try:
+			hostname = os.uname()[1]
+		except:
+			hostname = "Error: Hostname could not be found"
 
 		simple_info = {"CPU": num_cpu,
 			       "RAM": total_ram,
